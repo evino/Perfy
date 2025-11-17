@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from collector import GetCPUUtil, GetLatestMetrics
+import threading
 
 app = FastAPI()
+
+threading.Thread(target=GetCPUUtil, daemon=True).start()
 
 @app.get("/ping")
 def ping():
@@ -9,11 +13,7 @@ def ping():
 @app.get("/metrics")
 def metrics():
     # Placeholder; will be replaced by collector later
-    return {
-        "cpu": "0%",
-        "memory": "0MB",
-        "ipc": 0
-    }
+    return GetLatestMetrics()
 
 
 if __name__ == "__main__":

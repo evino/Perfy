@@ -1,14 +1,31 @@
 import psutil
-import time
+from time import sleep
+from collections import deque
 
 # Get CPU Usage
 # cpu_usage = psutil.cpu_percent(0.5, True)
 
-def GetCPUUtil(interval, show_all_cpus):
-    util = psutil.cpu_percent(interval, show_all_cpus)
-    return util
+# Keep a small history of metrics (optional)
+history_length = 100
+metrics_history = deque(maxlen=history_length)
 
-while (True):
-    print(GetCPUUtil(0.1, False))
-    time.sleep(1)
-    # break
+# def GetCPUUtil(interval, show_all_cpus):
+#     util = psutil.cpu_percent(interval, show_all_cpus)
+#     return util
+
+
+def GetCPUUtil():
+    while True: 
+        snapshot = {
+            "cpu_percent": psutil.cpu_percent(interval=None),  # non-blocking
+        }
+        metrics_history.append(snapshot)
+        sleep(1)
+
+def GetLatestMetrics():
+    """Return latest snapshot"""
+    if metrics_history:
+        return metrics_history[-1]
+    return {}
+
+
