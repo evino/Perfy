@@ -14,7 +14,7 @@
         ws.onmessage = (event) => {
             // Parse JSON and update page
             const data = JSON.parse(event.data);
-            document.getElementById("cpu").textContent = data.cpu_percent + "%";
+            document.getElementById("cpu").textContent = data.cpu_util + "%";
         };
 
         ws.onopen = () => console.log("WebSocket connected");

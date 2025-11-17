@@ -12,7 +12,7 @@ threading.Thread(target=GetCPUUtil, daemon=True).start()
 @app.get("/")
 def dashboard():
     # __file__ is ServerSide/main.py
-    frontend_file = Path(__file__).parent.parent / "Frontend" / "index.html"
+    frontend_file = Path(__file__).parent.parent / "FrontEnd" / "index.html"
     return FileResponse(frontend_file)
 
 @app.get("/ping")
