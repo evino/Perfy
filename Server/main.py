@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from collector import GetCPUUtil, GetLatestMetrics
 import threading
+import asyncio
 
 app = FastAPI()
 
@@ -14,6 +15,17 @@ def ping():
 def metrics():
     # Placeholder; will be replaced by collector later
     return GetLatestMetrics()
+
+@app.websocket("/metricWS")
+async def MetricsWebsocket(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = GetLatestMetrics()
+            await websocket.send_json(data)
+            await asyncio.sleep(1) #update interval
+    except Exception as e:
+        print(f"WebSocket disconnected: {e}")
 
 
 if __name__ == "__main__":

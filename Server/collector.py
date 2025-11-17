@@ -5,9 +5,8 @@ from collections import deque
 # Get CPU Usage
 # cpu_usage = psutil.cpu_percent(0.5, True)
 
-# Keep a small history of metrics (optional)
-history_length = 100
-metrics_history = deque(maxlen=history_length)
+
+metrics_history = {"CPU Util": "0%"}
 
 # def GetCPUUtil(interval, show_all_cpus):
 #     util = psutil.cpu_percent(interval, show_all_cpus)
@@ -16,16 +15,12 @@ metrics_history = deque(maxlen=history_length)
 
 def GetCPUUtil():
     while True: 
-        snapshot = {
-            "cpu_percent": psutil.cpu_percent(interval=None),  # non-blocking
-        }
-        metrics_history.append(snapshot)
+        cpuUtilSnapshot = psutil.cpu_percent(interval=None),  # non-blocking
+        metrics_history["CPU Util"] = cpuUtilSnapshot
         sleep(1)
 
 def GetLatestMetrics():
     """Return latest snapshot"""
-    if metrics_history:
-        return metrics_history[-1]
-    return {}
+    return metrics_history
 
 
