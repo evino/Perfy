@@ -4,8 +4,12 @@
     <title>CPU Dashboard</title>
 </head>
 <body>
-    <h1>CPU %</h1>
-    <div id="cpu">Connecting...</div>
+    <h1> Perf Metrics</h1>
+    <h2>CPU %</h2>
+    <div id="cpu util">Connecting...</div>
+    <h2>CPU Freq</h2>
+    <div id="cpu freq">Connecting...</div>
+
 
     <script>
         // Connect to your WebSocket
@@ -14,7 +18,8 @@
         ws.onmessage = (event) => {
             // Parse JSON and update page
             const data = JSON.parse(event.data);
-            document.getElementById("cpu").textContent = data.cpu_util + "%";
+            document.getElementById("cpu util").textContent = data.cpu_util + "%";
+            document.getElementById("cpu freq").textContent = data.cpu_freq;
         };
 
         ws.onopen = () => console.log("WebSocket connected");
