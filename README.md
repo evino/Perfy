@@ -6,6 +6,6 @@ benchmarks from webgui.
 ## Steps
 1. [ ] Get Python Webserver up
 2. [ ] Collect perf metrics
-3. *[ ] Aggregate metrics
-4. *[ ] Display Raw Data
-5. *[ ] Implement dashboard
+3. [ ] Aggregate metrics
+4. [ ] Display Raw Data
+5. [ ] Implement dashboard
