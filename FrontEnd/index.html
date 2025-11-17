@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CPU Dashboard</title>
+</head>
+<body>
+    <h1>CPU %</h1>
+    <div id="cpu">Connecting...</div>
+
+    <script>
+        // Connect to your WebSocket
+        const ws = new WebSocket("ws://localhost:8000/metricWS");
+
+        ws.onmessage = (event) => {
+            // Parse JSON and update page
+            const data = JSON.parse(event.data);
+            document.getElementById("cpu").textContent = data.cpu_percent + "%";
+        };
+
+        ws.onopen = () => console.log("WebSocket connected");
+        ws.onclose = () => console.log("WebSocket disconnected");
+    </script>
+</body>
+</html>

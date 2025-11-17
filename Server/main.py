@@ -1,4 +1,6 @@
 from fastapi import FastAPI, WebSocket
+from fastapi.responses import FileResponse
+from pathlib import Path
 from collector import GetCPUUtil, GetLatestMetrics
 import threading
 import asyncio
@@ -6,6 +8,12 @@ import asyncio
 app = FastAPI()
 
 threading.Thread(target=GetCPUUtil, daemon=True).start()
+
+@app.get("/")
+def dashboard():
+    # __file__ is ServerSide/main.py
+    frontend_file = Path(__file__).parent.parent / "Frontend" / "index.html"
+    return FileResponse(frontend_file)
 
 @app.get("/ping")
 def ping():
