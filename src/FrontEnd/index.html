@@ -24,6 +24,7 @@
             const data = JSON.parse(event.data);
             document.getElementById("cpu util").textContent = data.cpu_util + "%";
             document.getElementById("cpu freq").textContent = data.cpu_freq + "MHz";
+            console.log(data.cpu_freq);
             document.getElementById("memory percentage").textContent = data.memory_percentage + "%";
             document.getElementById("memory used").textContent = data.memory_used + "MiB";
 

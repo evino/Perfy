@@ -27,8 +27,8 @@ def GetCPUUtil():
 def GetCPUFreq():
     while True:
         cpuFreqSnapshot = psutil.cpu_freq(False)
-        print(cpuFreqSnapshot)
-        metrics_history["cpu_freq"] = cpuFreqSnapshot[0]
+        print(cpuFreqSnapshot.current)
+        metrics_history["cpu_freq"] = cpuFreqSnapshot.current
         sleep(1)
 
 def GetMemoryUsage():
