@@ -1,7 +1,7 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import FileResponse
 from pathlib import Path
-from collector import GetCPUUtil, GetCPUFreq, GetLatestMetrics
+from collector import GetCPUUtil, GetCPUFreq, GetMemoryUsage, GetLatestMetrics
 import threading
 import asyncio
 
@@ -9,6 +9,7 @@ app = FastAPI()
 
 threading.Thread(target=GetCPUUtil, daemon=True).start()
 threading.Thread(target=GetCPUFreq, daemon=True).start()
+threading.Thread(target=GetMemoryUsage, daemon=True).start()
 
 
 @app.get("/")

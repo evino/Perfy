@@ -8,7 +8,9 @@ from collections import deque
 
 metrics_history = {
     "cpu_util": "0",
-    "cpu_freq": "0"
+    "cpu_freq": "0",
+    "memory_percentage": "0",
+    "memory_used": "0"
                    }
 
 # def GetCPUUtil(interval, show_all_cpus):
@@ -29,6 +31,12 @@ def GetCPUFreq():
         metrics_history["cpu_freq"] = cpuFreqSnapshot[0]
         sleep(1)
 
+def GetMemoryUsage():
+    while True:
+        memoryPercentSnapshot = psutil.virtual_memory()
+        metrics_history["memory_percentage"] = memoryPercentSnapshot.percent
+        metrics_history["memory_used"] = f"{memoryPercentSnapshot.used / 1000000:.1f}"
+        sleep(1)
 
 def GetLatestMetrics():
     """Return latest snapshot"""

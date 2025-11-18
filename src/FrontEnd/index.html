@@ -9,6 +9,10 @@
     <div id="cpu util">Connecting...</div>
     <h2>CPU Freq</h2>
     <div id="cpu freq">Connecting...</div>
+    <h2>Memory Percentage</h2>
+    <div id="memory percentage">Connecting...</div>
+    <h2>Memory Used</h2>
+    <div id="memory used">Connecting...</div>
 
 
     <script>
@@ -19,7 +23,10 @@
             // Parse JSON and update page
             const data = JSON.parse(event.data);
             document.getElementById("cpu util").textContent = data.cpu_util + "%";
-            document.getElementById("cpu freq").textContent = data.cpu_freq;
+            document.getElementById("cpu freq").textContent = data.cpu_freq + "MHz";
+            document.getElementById("memory percentage").textContent = data.memory_percentage + "%";
+            document.getElementById("memory used").textContent = data.memory_used + "MiB";
+
         };
 
         ws.onopen = () => console.log("WebSocket connected");
