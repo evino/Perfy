@@ -39,7 +39,12 @@
 
     <div class="chart-container">
         <h2>Memory Usage (%)</h2>
-        <canvas id="memChart"></canvas>
+        <canvas id="memPercentageChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>Memory Usage (MiB)</h2>
+        <canvas id="memUsageChart"></canvas>
     </div>
 
     <script>
@@ -73,7 +78,9 @@
         // Create charts
         const cpuChart = createChart(document.getElementById('cpuChart'), "CPU Util (%)");
         const freqChart = createChart(document.getElementById('freqChart'), "CPU Frequency (MHz)");
-        const memChart = createChart(document.getElementById('memChart'), "Memory Used (%)");
+        const memPercentageChart = createChart(document.getElementById('memPercentageChart'), "Memory Usage (%)");
+        const memUsageChart = createChart(document.getElementById('memUsageChart'), "Memory Used (MiB)");
+
 
         // WebSocket connection
         const ws = new WebSocket("ws://" + window.location.host + "/metricsWS");
@@ -89,12 +96,15 @@
             freqChart.data.labels.push(t);
             freqChart.data.datasets[0].data.push(data.cpu_freq);
 
-            memChart.data.labels.push(t);
-            memChart.data.datasets[0].data.push(data.memory_percentage);
+            memPercentageChart.data.labels.push(t);
+            memPercentageChart.data.datasets[0].data.push(data.memory_percentage);
+
+            memUsageChart.data.labels.push(t);
+            memUsageChart.data.datasets[0].data.push(data.memory_used);
 
             // Limit history to ~60 points
             const limit = 60;
-            [cpuChart, freqChart, memChart].forEach(chart => {
+            [cpuChart, freqChart, memPercentageChart, memUsageChart].forEach(chart => {
                 if (chart.data.labels.length > limit) {
                     chart.data.labels.shift();
                     chart.data.datasets[0].data.shift();
