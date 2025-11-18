@@ -17,7 +17,9 @@
 
     <script>
         // Connect to your WebSocket
-        const ws = new WebSocket("ws://localhost:8000/metricsWS");
+        // const ws = new WebSocket("ws://localhost:8000/metricsWS");
+        const ws = new WebSocket("ws://" + window.location.host + "/metricsWS");
+
 
         ws.onmessage = (event) => {
             // Parse JSON and update page
