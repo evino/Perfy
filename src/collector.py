@@ -1,5 +1,6 @@
 import psutil
 from time import sleep
+from math import floor
 from collections import deque
 
 # Get CPU Usage
@@ -28,7 +29,7 @@ def GetCPUFreq():
     while True:
         cpuFreqSnapshot = psutil.cpu_freq(False)
         print(cpuFreqSnapshot.current)
-        metrics_history["cpu_freq"] = cpuFreqSnapshot.current
+        metrics_history["cpu_freq"] = floor(cpuFreqSnapshot.current)
         sleep(1)
 
 def GetMemoryUsage():
