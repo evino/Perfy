@@ -5,6 +5,7 @@ from collector import GetCPUUtil, GetCPUFreq, GetMemoryUsage, GetLatestMetrics
 import threading
 import asyncio
 
+
 app = FastAPI()
 
 threading.Thread(target=GetCPUUtil, daemon=True).start()
@@ -47,5 +48,6 @@ async def MetricsWebsocket(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    host_ip="0.0.0.0"
+    uvicorn.run("main:app", host=host_ip, port=8000, reload=True)
     
