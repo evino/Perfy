@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Metrics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: Arial;
+            padding: 20px;
+        }
+        .chart-container {
+            width: 700px;
+            margin-bottom: 40px;
+            background: #1c1c1c;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Real-Time Metrics Dashboard</h1>
+
+    <div class="chart-container">
+        <h2>CPU Util (%)</h2>
+        <canvas id="cpuChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>CPU Frequency (MHz)</h2>
+        <canvas id="freqChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>Memory Usage (%)</h2>
+        <canvas id="memChart"></canvas>
+    </div>
+
+    <script>
+        // =======================
+        // Utility: create a chart
+        // =======================
+        function createChart(ctx, label) {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: label,
+                        data: [],
+                        borderWidth: 2,
+                        borderColor: 'white',
+                        pointRadius: 0,
+                        tension: 0.2,
+                    }]
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: { display: false },
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Create charts
+        const cpuChart = createChart(document.getElementById('cpuChart'), "CPU Util (%)");
+        const freqChart = createChart(document.getElementById('freqChart'), "CPU Frequency (MHz)");
+        const memChart = createChart(document.getElementById('memChart'), "Memory Used (%)");
+
+        // WebSocket connection
+        const ws = new WebSocket("ws://" + window.location.host + "/metricsWS");
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const t = new Date().toLocaleTimeString();
+
+            // Add points
+            cpuChart.data.labels.push(t);
+            cpuChart.data.datasets[0].data.push(data.cpu_util);
+
+            freqChart.data.labels.push(t);
+            freqChart.data.datasets[0].data.push(data.cpu_freq);
+
+            memChart.data.labels.push(t);
+            memChart.data.datasets[0].data.push(data.memory_percentage);
+
+            // Limit history to ~60 points
+            const limit = 60;
+            [cpuChart, freqChart, memChart].forEach(chart => {
+                if (chart.data.labels.length > limit) {
+                    chart.data.labels.shift();
+                    chart.data.datasets[0].data.shift();
+                }
+                chart.update();
+            });
+        };
+    </script>
+
+</body>
+</html>

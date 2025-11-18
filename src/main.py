@@ -13,9 +13,15 @@ threading.Thread(target=GetMemoryUsage, daemon=True).start()
 
 
 @app.get("/")
-def dashboard():
+def raw_data():
     # __file__ is ServerSide/main.py
     frontend_file = Path(__file__).parent.parent / "src" / "FrontEnd" / "index.html"
+    return FileResponse(frontend_file)
+
+@app.get("/dashboard")
+def dashboard_data():
+    # __file__ is ServerSide/main.py
+    frontend_file = Path(__file__).parent.parent / "src" / "FrontEnd" / "dashboard.html"
     return FileResponse(frontend_file)
 
 @app.get("/ping")
@@ -27,7 +33,7 @@ def metrics():
     # Placeholder; will be replaced by collector later
     return GetLatestMetrics()
 
-@app.websocket("/metricWS")
+@app.websocket("/metricsWS")
 async def MetricsWebsocket(websocket: WebSocket):
     await websocket.accept()
     try:
