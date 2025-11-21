@@ -2,9 +2,15 @@
 Tools to collect performance metrics and display them through a web GUI, while being able to launch
 benchmarks from webgui.
 
+![alt text](util.png)
+(CPU Utilization Plot from dashboard)
+
+![alt text](freq.png)
+(CPU Core Frequency from dashboard)
+
 ## Running Dashboard
-1. Create python (3.10 and above) venv after cloning directory in top-level dir. Run `python3 -m
-venv venv`
+1. Create python (v3.10 and above) virtual environment after cloning directory. Run `python3 -m
+venv venv` inside `Perfy/` directory.
 2. Get python dependencies by running `pip install -r requirements.txt`
 3. `cd src/`
 4. Source StartServer file: `. StartServer.sh`
@@ -25,6 +31,9 @@ venv venv`
 6. [x] ALU Stress
 7. [x] Multi-thread ALU Stress
 8. [ ] ALU + Mem Stress
+
+Note when running inside WSL & VMs, some MSRs may be masked or not visible, resulting in incorrect
+readings for metrics like CPU Core Frequency.
 
 ### 11/12/2025: Adding Stress
 Got initial ALU stress working then added threading, using POSIX-threads. Can see a cool step up
