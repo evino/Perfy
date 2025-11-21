@@ -19,6 +19,7 @@ env/
 *.elf
 
 # Executables
+stress
 *.exe
 *.out
 *.app
