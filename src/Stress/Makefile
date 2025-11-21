@@ -1,6 +1,6 @@
 CC      := clang
 CFLAGS  := -O3 -march=native -Wall -Wextra -funroll-loops
-LDFLAGS := -flto
+LDFLAGS := -pthread
 
 SRC     := main.c int_stress.c
 OBJ     := $(SRC:.c=.o)
