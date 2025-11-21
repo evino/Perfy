@@ -16,7 +16,7 @@
    Returns:
        elapsed seconds (double)
 */
-double intrate_alu(uint64_t iterations);
+double intrate_alu();
 
 
 /* ===========================================

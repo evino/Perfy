@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include "int_stress.h"
 
-double intrate_alu(uint64_t iterations) {
+double intrate_alu() {
+
+
     // Prevent optimization removing work
     static volatile uint64_t intrate_sink = 0;
     printf("CPS is %lu\n", CLOCKS_PER_SEC);
@@ -14,6 +16,7 @@ double intrate_alu(uint64_t iterations) {
 
     clock_t start = clock();
 
+    uint64_t iterations = 3ULL * 1000ULL * 1000ULL * 1000ULL;
     for (uint64_t i = 0; i < iterations; i++) {
         a += 3;
         b ^= a;
