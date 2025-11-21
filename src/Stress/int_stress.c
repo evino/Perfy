@@ -1,9 +1,11 @@
 #include <time.h>
+#include <stdio.h>
 #include "int_stress.h"
 
 double intrate_alu(uint64_t iterations) {
     // Prevent optimization removing work
     static volatile uint64_t intrate_sink = 0;
+    printf("CPS is %lu\n", CLOCKS_PER_SEC);
 
     uint64_t a = 1;
     uint64_t b = 2;

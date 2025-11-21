@@ -1,5 +1,5 @@
 CC      := clang
-CFLAGS  := -O3 -march=native -Wall -Wextra -funroll-loops -flto
+CFLAGS  := -O3 -march=native -Wall -Wextra -funroll-loops
 LDFLAGS := -flto
 
 SRC     := main.c int_stress.c
