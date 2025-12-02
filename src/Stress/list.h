@@ -17,3 +17,8 @@ void prependNode(int data, list_t *l);
 // Append a node to list
 void appendNode(int data, list_t *l);
 
+int getHeadNode(list_t *l);
+
+int getTailNode(list_t *l);
+
+int getListSize(list_t *l);

@@ -2,9 +2,22 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "int_stress.h"
+#include "list.h"
 
 int main(int argc, char **argv) {
     printf("Hello world\n");
+    
+    list_t *testList = newList();
+
+    printf("List size is %d\n", getListSize(testList));
+    printf("list created\n");
+    prependNode(testList, 1);
+    appendNode(testList, 2);
+
+    int headTest = getHeadNode(testList);
+    int tailTest = getTailNode(testList);
+    printf("Head is %d, tail is %d.\n", headTest, tailTest);
+
 
     pthread_t thread1, thread2, thread3, thread4;
 
