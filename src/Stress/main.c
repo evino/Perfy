@@ -9,10 +9,10 @@ int main(int argc, char **argv) {
     
     list_t *testList = newList();
 
-    printf("List size is %d\n", getListSize(testList));
-    printf("list created\n");
     prependNode(1, testList);
     appendNode(2, testList);
+    appendNode(3, testList);
+    prependNode(0, testList);
 
     int headTest = getHeadNode(testList);
     int tailTest = getTailNode(testList);

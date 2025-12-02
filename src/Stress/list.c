@@ -48,15 +48,10 @@ int getListSize(list_t *l) {
 }
 
 void prependNode(int data, list_t *l) {
-    printf("prepend called\n");
-    printf("list size is %d\n", l->size);
     node_t *n = newNode(data);
-    printf("db\n");
     if (l->size == 0) {
-        printf("before\n");
         l->head = n;
         l->tail = n;
-        printf("after head/tail\n");
         l->size = 1;
         return;
     }
@@ -70,9 +65,7 @@ void prependNode(int data, list_t *l) {
 }
 
 void appendNode(int data, list_t *l) {
-    printf("append called\n");
     node_t *n = newNode(data);
-    printf("list size is %d\n", l->size);
     if (l->size == 0) {
         l->head = n;
         l->tail = n;
@@ -84,7 +77,6 @@ void appendNode(int data, list_t *l) {
     n->prev = l->tail;
     l->tail = n;
     l->size += 1;
-    printf("debug\n");
 
     return;
 }
