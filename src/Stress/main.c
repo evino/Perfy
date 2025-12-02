@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
 
     printf("List size is %d\n", getListSize(testList));
     printf("list created\n");
-    prependNode(testList, 1);
-    appendNode(testList, 2);
+    prependNode(1, testList);
+    appendNode(2, testList);
 
     int headTest = getHeadNode(testList);
     int tailTest = getTailNode(testList);
