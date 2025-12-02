@@ -43,4 +43,38 @@ list_t* newList() {
     return l;
 }
 
+void prependNode(int data, list_t *l) {
+    node_t *n = newNode(data);
+    if (l->size == 0) {
+        l->head = n;
+        l->tail = n;
+        l->size += 1;
+        return;
+    }
+
+    l->head->prev = n;
+    n->next = l->head;
+    l->head = n;
+    l->size += 1;
+
+    return;
+}
+
+void appendNode(int data, list_t *l) {
+    node_t *n = newNode(data);
+    if (l->size == 0) {
+        l->head = n;
+        l->tail = n;
+        l->size += 1;
+        return;
+    }
+
+    l->tail->next = n;
+    n->prev = l->tail;
+    l->tail = n;
+    l->size += 1;
+
+    return;
+}
+
 
