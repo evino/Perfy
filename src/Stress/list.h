@@ -22,3 +22,7 @@ int getHeadNode(list_t *l);
 int getTailNode(list_t *l);
 
 int getListSize(list_t *l);
+
+void cursorForward(list_t *l);
+
+void cursorBackward(list_t *l);

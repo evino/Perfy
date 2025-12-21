@@ -12,6 +12,7 @@ struct list {
     int size;
     node_t *head;
     node_t *tail;
+    node_t *cursor;
 };
 
 // private node constructor
@@ -39,8 +40,37 @@ list_t *newList() {
     l->size = 0;
     l->head = NULL;
     l->tail = NULL;
-
+    l->cursor = NULL;
     return l;
+}
+
+void cursorForward(list_t *l) {
+    if (l->size == 0) {
+        fprintf(stderr, "Empty list\n");
+        return;
+    }
+
+    if (l->cursor->next == NULL) {
+        return;
+    }
+
+    l->cursor = l->cursor->next;
+
+    return;
+}
+
+void cursorBackward(list_t *l) {
+    if (l->size == 0) {
+        fprintf(stderr, "Empty list\n");
+        return;
+    }
+
+    if (l->cursor->prev == NULL) {
+        return;
+    }
+
+    l->cursor = l->cursor->prev;
+    return;
 }
 
 int getListSize(list_t *l) {
@@ -53,6 +83,7 @@ void prependNode(int data, list_t *l) {
         l->head = n;
         l->tail = n;
         l->size = 1;
+        l->cursor = n;
         return;
     }
 
@@ -67,9 +98,7 @@ void prependNode(int data, list_t *l) {
 void appendNode(int data, list_t *l) {
     node_t *n = newNode(data);
     if (l->size == 0) {
-        l->head = n;
-        l->tail = n;
-        l->size = 1;
+        prependNode(data, l);
         return;
     }
 
