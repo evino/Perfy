@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
     int tailTest = getTailNode(testList);
     printf("Head is %d, tail is %d.\n", headTest, tailTest);
 
+    deleteList(&testList);
+
 
     pthread_t thread1, thread2, thread3, thread4;
 

@@ -1,4 +1,4 @@
-#include "list.h"
+ #include "list.h"
 
 typedef struct node node_t;
 struct node {
@@ -31,6 +31,28 @@ void deleteNode(node_t **n) {
     *n = NULL;
     n = NULL;
 
+    return;
+}
+
+// list destructor
+void deleteList(list_t **l) {
+    if (l == NULL || *l == NULL) {
+        return;
+    }
+
+    cursorFront(*l);
+
+    while ((*l)->cursor->next != NULL) {
+        printf("deleting node\n");
+        node_t *tmp = (*l)->cursor->next;
+        deleteNode(&((*l)->cursor));
+        (*l)->cursor = tmp;
+    }
+    deleteNode(&((*l)->cursor));
+
+    free(*l);
+    *l = NULL;
+    l = NULL;
     return;
 }
 
@@ -126,3 +148,43 @@ int getTailNode(list_t *l) {
     return l->tail->data;
 }
 
+void cursorFront(list_t *l) {
+    if (l->size == 0) {
+        return;
+    }
+
+    l->cursor = l->head;
+    return;
+}
+
+void cursorBack(list_t *l) {
+    if (l->size == 0) {
+        return;
+    }
+
+    l->cursor = l->tail;
+    return;
+}
+
+int getCursorNode(list_t *l) {
+    if (l->cursor == NULL) {
+        fprintf(stderr, "Cursor is NULL\n");
+        return -1;
+    }
+
+    return l->cursor->data;
+}
+
+void traverseList(list_t *l) {
+    if (l->size == 0) {
+        return;
+    }
+
+    cursorFront(l);
+    while (l->cursor->next != NULL) {
+        cursorForward(l);
+        printf("Cursor data: %d\n", getCursorNode(l));
+    }
+
+    return;
+}
