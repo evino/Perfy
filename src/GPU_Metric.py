@@ -10,6 +10,8 @@ def get_gpu_metrics():
 	for i in range(device_count):
 		handle = pynvml.nvmlDeviceGetHandleByIndex(i)
 		name = pynvml.nvmlDeviceGetName(handle)
+		if isinstance(name, bytes):
+			name = name.decode('utf-8')
 
 		utilization = pynvml.nvmlDeviceGetUtilizationRates(handle)
 		memory = pynvml.nvmlDeviceGetMemoryInfo(handle)
@@ -17,7 +19,7 @@ def get_gpu_metrics():
 		metrics.append({
 			'device': i,
 			'name': name,
-			'temperature': pynvml.nvmlDeviceGetTemperatureInCelcius(handle),
+			'temperature': pynvml.nvmlDeviceGetTemperature(handle, pynvml.NVML_TEMPERATURE_GPU),
 			'utilization': {
 				'gpu': utilization.gpu,
 				'memory': utilization.memory
@@ -39,8 +41,8 @@ if __name__ == "__main__":
 			for metric in get_gpu_metrics():
 				print(f"Device {metric['device']} ({metric['name']})")
 				print(f"  Temperature: {metric['temperature']}°C")
-				print(f"  Utilization: {metric['utilization']['gpu']}% GPU, {metric['utilization']['memory']}%Memory")
-				print(f"  Memory: {metric['memory']['used']}/{metric['memory']['total']} (Free:{metric['memory']['free']})")
+				print(f"  Utilization: {metric['utilization']['gpu']}% GPU, {metric['utilization']['memory']}% Memory")
+				print(f"  Memory: {metric['memory']['used']}/{metric['memory']['total']} (Free: {metric['memory']['free']})")
 				print()
 			time.sleep(5)
 	except KeyboardInterrupt:
